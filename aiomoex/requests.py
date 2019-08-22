@@ -368,6 +368,23 @@ async def get_board_securities(
     query = _make_query(table=table, columns=columns)
     return await _get_short_data(url, table, query)
 
+"""-----------------------Черновик----------------------------------"""
+async def get_trade_history(
+    start=None,
+    end=None,
+    columns=("TRADENO", "TRADEDATE", "TRADETIME", "SECID", "BOARDID", "PRICE", "QUANTITY", "VALUE", "TYPE", "BUYSELL"),
+    market="shares",
+    engine="stock",
+):   
+    url = (
+        f"https://iss.moex.com/iss/history/engines/{engine}/markets/{market}/trades.json"
+    )
+    table = "history"
+    query = _make_query(start=start, end=end, table=table, columns=columns)
+    return await _get_long_data(url, table, query)
+   
+"""-----------------------------------------------------------------"""
+
 
 async def get_market_history(
     security,
